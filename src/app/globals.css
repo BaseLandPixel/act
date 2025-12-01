@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --color-text: #1A1A1A;
+  /* Charcoal */
+  --color-brand: #781F19;
+  /* Deep Ruby Red */
+  --color-gold: #D4AF37;
+  /* Metallic Gold */
+  --color-bg-primary: #F9F7F2;
+  /* Ivory/Cream Paper Texture */
+  --color-bg-secondary: #E7E2DD;
+  /* Subtle Grey/Beige */
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+/* Custom Utilities if needed */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 1.5s ease-out forwards;
+}
