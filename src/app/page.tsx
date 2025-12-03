@@ -1,107 +1,240 @@
-import React from "react";
+"use client";
+
+import React, { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
+import BraceModel from "@/components/3d/BraceModel";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 
 export default function Home() {
+  const scrollRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: scrollRef,
+    offset: ["start start", "end start"],
+  });
+
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 1.1]);
+
   return (
-    <main className="min-h-screen flex flex-col">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-12 overflow-hidden">
-        {/* Background Texture */}
-        {/* Background Video */}
-        <div className="absolute inset-0 z-0">
+    <main className="min-h-screen bg-[#FAFAF9]" ref={scrollRef}>
+      {/* SECTION 1: THE CINEMATIC HERO */}
+      <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0F2F24]">
+        {/* Video Background */}
+        <motion.div
+          style={{ opacity: heroOpacity, scale: heroScale }}
+          className="absolute inset-0 z-0"
+        >
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover opacity-60"
           >
             <source src="/images/banner.mov" type="video/quicktime" />
             <source src="/images/banner.mov" type="video/mp4" />
-            Your browser does not support the video tag.
           </video>
-          {/* Cinematic Luxury Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black/80 z-10"></div>
-        </div>
+          <div className="absolute inset-0 bg-black/40" />
+        </motion.div>
 
-        <div className="z-20 flex flex-col items-center max-w-4xl mx-auto space-y-8 animate-fade-in">
-          {/* Monogram & Brand */}
-          <div className="flex flex-col items-center space-y-4 mb-4">
-            <span className="font-serif text-6xl md:text-8xl text-gold tracking-tighter drop-shadow-md">KS</span>
-            <h1 className="font-serif text-3xl md:text-4xl text-bg-primary tracking-wide uppercase drop-shadow-sm">
-              Künyeci Süleyman
-            </h1>
-          </div>
+        {/* Content */}
+        <div className="relative z-10 flex flex-col items-center text-center space-y-8 px-6">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="text-xs md:text-sm font-sans tracking-[0.3em] text-[#F4EBD0] uppercase"
+          >
+            Established 1989 • Istanbul
+          </motion.span>
 
-          {/* Tagline */}
-          <p className="font-sans text-sm md:text-base text-bg-primary/90 tracking-[0.3em] uppercase drop-shadow-sm">
-            Hikâyeni üstünde taşı.
-          </p>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 1 }}
+            className="font-serif text-5xl md:text-7xl lg:text-8xl text-white leading-tight"
+          >
+            The Art of <br />
+            <span className="text-[#D4AF37] italic">Eternal Gold</span>
+          </motion.h1>
 
-          {/* Headline */}
-          <h2 className="font-serif text-4xl md:text-6xl text-bg-primary leading-tight max-w-3xl mt-8 drop-shadow-md">
-            Künyeci Süleyman — El işçiliğinin üç nesilli mirası
-          </h2>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 1 }}
+            className="font-sans text-sm md:text-base text-gray-200 tracking-widest uppercase max-w-md"
+          >
+            Discover the Gen to Gen Legacy
+          </motion.p>
 
-          {/* CTA */}
-          <div className="flex flex-col items-center space-y-6 mt-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 1 }}
+            className="pt-8"
+          >
             <Link
-              href="/randevu"
-              className="group relative px-10 py-4 border border-gold bg-black/20 backdrop-blur-sm hover:bg-brand transition-all duration-300 rounded-none"
+              href="/shop/custom-bracelet"
+              className="px-8 py-4 border border-[#D4AF37] text-white font-sans text-xs tracking-[0.2em] uppercase hover:bg-[#D4AF37] hover:text-[#0F2F24] transition-all duration-500"
             >
-              <span className="relative z-10 font-sans text-sm tracking-[0.2em] text-bg-primary group-hover:text-bg-primary transition-colors uppercase">
-                Randevu Al
-              </span>
+              Enter The Atelier
             </Link>
-            <Link
-              href="/katalog"
-              className="text-xs font-sans tracking-[0.2em] text-bg-primary/80 hover:text-gold border-b border-transparent hover:border-gold transition-all uppercase drop-shadow-sm"
-            >
-              E-Katalogu İncele
-            </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Tockify Preview & Manifesto Band */}
-      <section className="bg-bg-primary border-t border-gold/30 py-16">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center space-y-12">
-
-          {/* Tockify Preview (Compact) */}
-          <div className="w-full max-w-md bg-white p-6 shadow-none border border-gold/20 text-center">
-            <h3 className="font-serif text-lg text-text mb-4">Randevu Takvimi</h3>
-            {/* Placeholder for Tockify Month Thumbnail */}
-            <div className="aspect-[4/3] bg-bg-primary flex items-center justify-center mb-4 text-gray-400 text-xs font-sans uppercase tracking-widest border border-bg-secondary">
-              [Tockify Month Preview]
-            </div>
-            <Link href="/randevu" className="block w-full py-3 bg-brand text-bg-primary text-xs tracking-widest uppercase hover:bg-brand/90 transition-colors rounded-none">
-              Takvimi Aç
-            </Link>
-          </div>
-
-          {/* Visual Strip */}
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="group relative aspect-[3/2] overflow-hidden bg-bg-primary border border-gold/10">
-                <Image
-                  src="/images/bracelet-1.png" // Placeholder
-                  alt="Custom Bracelet Detail"
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Manifesto */}
-          <div className="max-w-2xl text-center">
-            <p className="font-serif text-lg md:text-xl text-text leading-relaxed italic">
-              “Künyeci Süleyman, kuşaktan kuşağa aktarılan ustalığın güncel yorumu. Her parça kişiye özel tasarım, her randevu bir hikâye başlangıcıdır.”
+      {/* SECTION 2: THE EDITORIAL SCROLL */}
+      <section className="py-24 px-6 md:px-12 lg:px-24 bg-[#FAFAF9]">
+        {/* Block 1: Heritage */}
+        <div className="flex flex-col md:flex-row items-center gap-12 mb-32">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            className="w-full md:w-1/2 relative aspect-[3/4] overflow-hidden"
+          >
+            <Image
+              src="/images/bracelet-1.png" // Placeholder
+              alt="Craftsmanship"
+              fill
+              className="object-cover hover:scale-105 transition-transform duration-1000"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="w-full md:w-1/2 space-y-6"
+          >
+            <span className="text-[#D4AF37] font-sans text-xs tracking-[0.2em] uppercase">Heritage</span>
+            <h2 className="font-serif text-4xl md:text-5xl text-[#0F2F24]">Mastery in Every Detail</h2>
+            <p className="font-sans text-gray-600 leading-relaxed max-w-md">
+              For over three decades, our atelier has been a sanctuary of silence and precision.
+              Each piece is not merely manufactured but sculpted, carrying the weight of tradition
+              and the brilliance of modern design.
             </p>
-          </div>
+            <Link href="/hakkimizda" className="inline-block border-b border-[#0F2F24] pb-1 text-xs font-sans tracking-[0.2em] uppercase hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors">
+              Read Our Story
+            </Link>
+          </motion.div>
+        </div>
 
+        {/* Block 2: The Craft */}
+        <div className="flex flex-col md:flex-row-reverse items-center gap-12">
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            className="w-full md:w-1/2 relative aspect-[3/4] overflow-hidden"
+          >
+            <Image
+              src="/images/gizem_nameplate.jpg" // Placeholder
+              alt="Design"
+              fill
+              className="object-cover hover:scale-105 transition-transform duration-1000"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="w-full md:w-1/2 space-y-6 md:text-right flex flex-col items-end"
+          >
+            <span className="text-[#D4AF37] font-sans text-xs tracking-[0.2em] uppercase">The Craft</span>
+            <h2 className="font-serif text-4xl md:text-5xl text-[#0F2F24]">Bespoke Elegance</h2>
+            <p className="font-sans text-gray-600 leading-relaxed max-w-md">
+              True luxury is personal. Our bespoke service invites you to become the architect
+              of your own legacy. From the initial sketch to the final polish, your vision
+              guides our hands.
+            </p>
+            <Link href="/katalog" className="inline-block border-b border-[#0F2F24] pb-1 text-xs font-sans tracking-[0.2em] uppercase hover:text-[#D4AF37] hover:border-[#D4AF37] transition-colors">
+              Explore Collection
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* SECTION 3: THE FEATURED CAROUSEL */}
+      <section className="py-24 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 mb-12 flex justify-between items-end">
+          <h2 className="font-serif text-3xl md:text-4xl text-[#0F2F24]">Curated Selection</h2>
+          <Link href="/katalog" className="text-xs font-sans tracking-[0.2em] uppercase text-gray-500 hover:text-[#D4AF37] transition-colors">
+            View All
+          </Link>
+        </div>
+
+        <div className="pl-6 md:pl-24">
+          <Swiper
+            modules={[Autoplay]}
+            spaceBetween={30}
+            slidesPerView={1.2}
+            breakpoints={{
+              768: { slidesPerView: 2.5 },
+              1024: { slidesPerView: 3.2 },
+            }}
+            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            loop={true}
+            className="pb-12"
+          >
+            {[1, 2, 3, 4, 5].map((i) => (
+              <SwiperSlide key={i}>
+                <div className="group cursor-pointer">
+                  <div className="relative aspect-[4/5] bg-[#F9F7F2] mb-6 overflow-hidden">
+                    <Image
+                      src="/images/bracelet-1.png"
+                      alt="Product"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                  <h3 className="font-serif text-lg text-[#0F2F24] mb-1">The Classic Cuban</h3>
+                  <p className="font-sans text-xs text-gray-500 tracking-widest">FROM 12,500 TL</p>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </section>
+
+      {/* SECTION 4: THE ATELIER TEASER */}
+      <section className="h-[80vh] flex flex-col md:flex-row bg-[#0F2F24] overflow-hidden">
+        {/* Left: 3D Render */}
+        <div className="w-full md:w-1/2 h-1/2 md:h-full relative bg-gradient-to-br from-[#0F2F24] to-black">
+          <Canvas shadows camera={{ position: [0, 0, 5], fov: 45 }}>
+            <ambientLight intensity={0.5} />
+            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} castShadow />
+            <Environment preset="city" />
+            <BraceModel text="LEGACY" />
+            <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} />
+            <ContactShadows position={[0, -2, 0]} opacity={0.5} scale={10} blur={2.5} far={4} />
+          </Canvas>
+        </div>
+
+        {/* Right: Content */}
+        <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center items-center text-center p-12 bg-[#0F2F24] text-white">
+          <span className="text-[#D4AF37] font-sans text-xs tracking-[0.3em] uppercase mb-6">The Atelier</span>
+          <h2 className="font-serif text-5xl md:text-6xl mb-6 leading-tight">
+            Design Your <br /> Own Legacy
+          </h2>
+          <p className="font-sans text-gray-300 max-w-md mb-12 leading-relaxed">
+            Experience the fusion of technology and tradition. Visualize your bespoke piece in real-time 3D before it is crafted by our master jewelers.
+          </p>
+          <Link
+            href="/shop/custom-bracelet"
+            className="px-10 py-4 bg-[#D4AF37] text-[#0F2F24] font-sans text-xs tracking-[0.2em] uppercase hover:bg-white transition-colors duration-300"
+          >
+            Start Customizing
+          </Link>
         </div>
       </section>
     </main>

@@ -105,6 +105,18 @@ export default function RegisterPage() {
                             />
                         </div>
 
+                        <div className="flex items-start gap-3">
+                            <input
+                                type="checkbox"
+                                required
+                                id="legal-consent"
+                                className="mt-1 w-4 h-4 border-gray-300 rounded text-brand focus:ring-brand"
+                            />
+                            <label htmlFor="legal-consent" className="text-xs text-gray-500 font-sans">
+                                <Link href="/legal/terms-of-service" target="_blank" className="text-brand hover:underline">Kullanım Koşullarını</Link> ve <Link href="/legal/privacy-policy" target="_blank" className="text-brand hover:underline">Gizlilik Politikasını</Link> okudum, onaylıyorum.
+                            </label>
+                        </div>
+
                         <button
                             type="submit"
                             disabled={loading}

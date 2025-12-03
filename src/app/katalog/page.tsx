@@ -22,6 +22,17 @@ const PRODUCTS = [
     { id: 4, code: "PRZ 1011", metal: "White Gold", weight: "15.10 GR", measurement: "9.0 mm", image: "/images/bracelet-1.png", description: "Modern beyaz altın, güçlü ve şık duruş." },
     { id: 5, code: "PRZ 1012", metal: "14K Gold", weight: "11.80 GR", measurement: "7.0 mm", image: "/images/bracelet-1.png", description: "Klasik tasarımın modern yorumu." },
     { id: 6, code: "PRZ 1013", metal: "18K Gold", weight: "13.40 GR", measurement: "8.0 mm", image: "/images/bracelet-1.png", description: "Lüks ve ağırlığı hissedilen özel parça." },
+    {
+        id: 99,
+        code: "BESPOKE ATELIER",
+        metal: "Custom 14K Gold",
+        weight: "Variable",
+        measurement: "Custom",
+        image: "/images/bracelet-1.png", // Placeholder
+        description: "Kendi mirasınızı tasarlayın. 3D atölyemizde isminizi veya özel bir tarihi altın üzerine işleyin.",
+        link: "/shop/custom-bracelet",
+        isCustomizer: true
+    }
 ];
 
 export default function CatalogPage() {
@@ -46,19 +57,31 @@ export default function CatalogPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
                     {PRODUCTS.map((product) => (
-                        <div key={product.id} className="group cursor-pointer" onClick={() => setSelectedProduct(product)}>
-                            <div className="relative aspect-[3/2] overflow-hidden bg-white mb-6 shadow-none border border-bg-secondary group-hover:border-gold transition-colors">
+                        <div key={product.id} className="group cursor-pointer" onClick={() => {
+                            if ((product as any).isCustomizer) {
+                                window.location.href = (product as any).link;
+                            } else {
+                                setSelectedProduct(product);
+                            }
+                        }}>
+                            <div className={`relative aspect-[3/2] overflow-hidden bg-white mb-6 shadow-none border transition-colors ${(product as any).isCustomizer ? "border-gold bg-gold/5" : "border-bg-secondary group-hover:border-gold"
+                                }`}>
                                 <Image
                                     src={product.image}
                                     alt={product.code}
                                     fill
                                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
+                                {(product as any).isCustomizer && (
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                                        <span className="font-serif text-white text-xl tracking-widest border border-white px-6 py-2">TASARLA</span>
+                                    </div>
+                                )}
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
                             </div>
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <h3 className="font-serif text-lg text-text tracking-wide mb-1">
+                                    <h3 className={`font-serif text-lg tracking-wide mb-1 ${(product as any).isCustomizer ? "text-gold" : "text-text"}`}>
                                         {product.code}
                                     </h3>
                                     <p className="text-xs font-sans text-gray-400 tracking-widest uppercase">

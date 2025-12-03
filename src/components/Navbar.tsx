@@ -27,14 +27,16 @@ export default function Navbar() {
     return (
         <>
             <nav
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-bg-primary/95 backdrop-blur-md shadow-sm py-4" : "bg-transparent py-6"
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+                        ? "bg-neutral-950/90 backdrop-blur-md shadow-sm py-4"
+                        : "bg-gradient-to-b from-black/70 to-transparent py-6"
                     }`}
             >
                 <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setIsOpen(true)}
-                        className="md:hidden text-text"
+                        className="md:hidden text-white drop-shadow-md"
                         aria-label="Menu"
                     >
                         <Menu size={24} />
@@ -42,17 +44,17 @@ export default function Navbar() {
 
                     {/* Desktop Links (Left) */}
                     <div className="hidden md:flex space-x-8">
-                        <Link href="/katalog" className="text-sm font-sans tracking-[0.2em] text-text hover:text-brand transition-colors">
+                        <Link href="/katalog" className="text-sm font-sans tracking-[0.2em] text-white hover:text-brand transition-colors drop-shadow-md">
                             KATALOG
                         </Link>
-                        <Link href="/hakkimizda" className="text-sm font-sans tracking-[0.2em] text-text hover:text-brand transition-colors">
+                        <Link href="/hakkimizda" className="text-sm font-sans tracking-[0.2em] text-white hover:text-brand transition-colors drop-shadow-md">
                             HAKKIMIZDA
                         </Link>
                     </div>
 
                     {/* Logo */}
                     <Link href="/" className="absolute left-1/2 transform -translate-x-1/2 text-center">
-                        <h1 className={`font-serif text-text transition-all duration-300 ${scrolled ? "text-2xl" : "text-3xl"
+                        <h1 className={`font-serif text-white transition-all duration-300 drop-shadow-md ${scrolled ? "text-2xl" : "text-3xl"
                             }`}>
                             KS
                         </h1>
@@ -60,10 +62,10 @@ export default function Navbar() {
 
                     {/* Desktop Links (Right) */}
                     <div className="hidden md:flex items-center space-x-8">
-                        <Link href="/randevu" className="text-sm font-sans tracking-[0.2em] text-text hover:text-brand transition-colors">
+                        <Link href="/randevu" className="text-sm font-sans tracking-[0.2em] text-white hover:text-brand transition-colors drop-shadow-md">
                             RANDEVU
                         </Link>
-                        <button onClick={toggleCart} className="text-text hover:text-brand transition-colors relative" aria-label="Sepet">
+                        <button onClick={toggleCart} className="text-white hover:text-brand transition-colors relative drop-shadow-md" aria-label="Sepet">
                             <ShoppingBag size={20} />
                             {items.length > 0 && (
                                 <span className="absolute -top-1 -right-1 bg-brand text-bg-primary text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
@@ -71,13 +73,13 @@ export default function Navbar() {
                                 </span>
                             )}
                         </button>
-                        <Link href="/giris" className="text-text hover:text-brand transition-colors" aria-label="Giriş">
+                        <Link href="/giris" className="text-white hover:text-brand transition-colors drop-shadow-md" aria-label="Giriş">
                             <User size={20} />
                         </Link>
                     </div>
 
                     {/* Mobile CTA */}
-                    <Link href="/randevu" className="md:hidden text-xs font-sans tracking-[0.2em] border border-gold px-3 py-2 rounded-none text-text">
+                    <Link href="/randevu" className="md:hidden text-xs font-sans tracking-[0.2em] border border-gold px-3 py-2 rounded-none text-white drop-shadow-md">
                         RANDEVU
                     </Link>
                 </div>
