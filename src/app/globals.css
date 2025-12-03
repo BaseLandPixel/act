@@ -13,7 +13,7 @@
   /* Subtle Grey/Beige */
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-serif: var(--font-raleigh), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 /* Custom Utilities if needed */

@@ -7,8 +7,23 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+// NOTE: Using Playfair Display as a fallback for Raleigh until local font files are provided.
+// To use local Raleigh font:
+// 1. Place Raleigh-Regular.woff2 and Raleigh-Bold.woff2 in public/fonts/
+// 2. Uncomment the localFont configuration below and remove this Playfair_Display config.
+/*
+import localFont from "next/font/local";
+const raleigh = localFont({
+  src: [
+    { path: "../../public/fonts/Raleigh-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../../public/fonts/Raleigh-Bold.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--font-raleigh",
+  display: "swap",
+});
+*/
+const raleigh = Playfair_Display({
+  variable: "--font-raleigh",
   subsets: ["latin"],
 });
 
@@ -31,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="tr" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${playfair.variable} antialiased bg-bg-primary text-text`}
+        className={`${inter.variable} ${raleigh.variable} antialiased bg-bg-primary text-text`}
       >
         <Providers>
           <CartProvider>
