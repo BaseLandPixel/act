@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
+import Hero from "@/components/home/Hero";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -12,85 +13,12 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 
 export default function Home() {
-  const scrollRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: scrollRef,
-    offset: ["start start", "end start"],
-  });
-
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 1.1]);
-
   return (
-    <main className="min-h-screen bg-[#FAFAF9]" ref={scrollRef}>
-      {/* SECTION 1: THE CINEMATIC HERO */}
-      <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0F2F24]">
-        {/* Video Background */}
-        <motion.div
-          style={{ opacity: heroOpacity, scale: heroScale }}
-          className="absolute inset-0 z-0"
-        >
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover opacity-60"
-          >
-            <source src="/images/banner.mov" type="video/quicktime" />
-            <source src="/images/banner.mov" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-black/40" />
-        </motion.div>
-
-        {/* Content */}
-        <div className="relative z-10 flex flex-col items-center text-center space-y-8 px-6">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="text-xs md:text-sm font-sans tracking-[0.3em] text-[#F4EBD0] uppercase"
-          >
-            Established 1989 • Istanbul
-          </motion.span>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 1 }}
-            className="font-serif text-5xl md:text-7xl lg:text-8xl text-white leading-tight"
-          >
-            The Art of <br />
-            <span className="text-[#D4AF37] italic">Eternal Gold</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 1 }}
-            className="font-sans text-sm md:text-base text-gray-200 tracking-widest uppercase max-w-md"
-          >
-            Discover the Gen to Gen Legacy
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.5, duration: 1 }}
-            className="pt-8"
-          >
-            <Link
-              href="/shop/custom-bracelet"
-              className="px-8 py-4 border border-[#D4AF37] text-white font-sans text-xs tracking-[0.2em] uppercase hover:bg-[#D4AF37] hover:text-[#0F2F24] transition-all duration-500"
-            >
-              Enter The Atelier
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+    <main className="h-screen w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth bg-[#FAFAF9]">
+      <Hero />
 
       {/* SECTION 2: THE EDITORIAL SCROLL */}
-      <section className="py-24 px-6 md:px-12 lg:px-24 bg-[#FAFAF9]">
+      <section className="h-screen w-full py-24 px-6 md:px-12 lg:px-24 bg-[#FAFAF9] snap-start flex flex-col justify-center">
         {/* Block 1: Heritage */}
         <div className="flex flex-col md:flex-row items-center gap-12 mb-32">
           <motion.div
@@ -165,7 +93,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 3: THE FEATURED CAROUSEL */}
-      <section className="py-24 bg-white overflow-hidden">
+      <section className="h-screen w-full py-24 bg-white overflow-hidden snap-start flex flex-col justify-center">
         <div className="max-w-7xl mx-auto px-6 mb-12 flex justify-between items-end">
           <h2 className="font-serif text-3xl md:text-4xl text-[#0F2F24]">Curated Selection</h2>
           <Link href="/katalog" className="text-xs font-sans tracking-[0.2em] uppercase text-gray-500 hover:text-[#D4AF37] transition-colors">
@@ -207,7 +135,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 4: THE ATELIER TEASER */}
-      <section className="h-[80vh] flex flex-col md:flex-row bg-[#0F2F24] overflow-hidden">
+      <section className="h-screen w-full flex flex-col md:flex-row bg-[#0F2F24] overflow-hidden snap-start">
         {/* Left: 3D Render */}
         <div className="w-full md:w-1/2 h-1/2 md:h-full relative bg-gradient-to-br from-[#0F2F24] to-black">
           <Canvas shadows camera={{ position: [0, 0, 5], fov: 45 }}>

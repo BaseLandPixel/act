@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import ProcessTimeline from "@/components/about/ProcessTimeline";
 
 export default function AboutPage() {
     return (
@@ -110,6 +111,10 @@ export default function AboutPage() {
                     </div>
                 </div>
             </div>
-        </main>
+
+
+            {/* The Bespoke Journey Roadmap */}
+            <ProcessTimeline />
+        </main >
     );
 }

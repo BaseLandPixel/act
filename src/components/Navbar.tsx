@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Menu, X, User, ShoppingBag } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -8,29 +8,13 @@ import { useCart } from "@/context/CartContext";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
     const pathname = usePathname();
     const { toggleCart, items } = useCart();
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
-    useEffect(() => {
-        setIsOpen(false);
-    }, [pathname]);
 
     return (
         <>
             <nav
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-                        ? "bg-neutral-950/90 backdrop-blur-md shadow-sm py-4"
-                        : "bg-gradient-to-b from-black/70 to-transparent py-6"
-                    }`}
+                className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-black/80 to-transparent py-6"
             >
                 <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
                     {/* Mobile Menu Button */}
@@ -54,8 +38,7 @@ export default function Navbar() {
 
                     {/* Logo */}
                     <Link href="/" className="absolute left-1/2 transform -translate-x-1/2 text-center">
-                        <h1 className={`font-serif text-white transition-all duration-300 drop-shadow-md ${scrolled ? "text-2xl" : "text-3xl"
-                            }`}>
+                        <h1 className="font-serif text-white text-3xl drop-shadow-md">
                             KS
                         </h1>
                     </Link>

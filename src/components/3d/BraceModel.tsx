@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { useGLTF, Text, Float } from "@react-three/drei";
+import { useGLTF, Text, Float, Center } from "@react-three/drei";
 import * as THREE from "three";
 
 interface BraceModelProps {
@@ -36,30 +36,32 @@ export default function BraceModel({ text }: BraceModelProps) {
 
     return (
         <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-            <group rotation={[Math.PI / 2, 0, 0]}>
-                {/* Render the loaded Matrix CAD model */}
-                {/* Adjust scale/position as needed based on the model's export settings */}
-                <primitive object={clonedScene} scale={1} position={[0, -0.5, 0]} />
+            <Center>
+                <group rotation={[Math.PI / 2, 0, 0]}>
+                    {/* Render the loaded Matrix CAD model */}
+                    {/* Adjust scale/position as needed based on the model's export settings */}
+                    <primitive object={clonedScene} scale={1} position={[0, -0.5, 0]} />
 
-                {/* 
-            Engraving Text Overlay
-            NOTE: These coordinates [0, 0.1, 0.5] are a starting point.
-            You may need to manually adjust x, y, z to align perfectly with the
-            plate surface of the '2kol1.glb' model.
-        */}
-                <group rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.1, 0.5]}>
-                    <Text
-                        position={[0, 0, 0]}
-                        fontSize={0.2}
-                        color="#781F19" // Deep Ruby for contrast/inlay look
-                        anchorX="center"
-                        anchorY="middle"
-                        characters="abcdefghijklmnopqrstuvwxyz0123456789!"
-                    >
-                        {text}
-                    </Text>
+                    {/* 
+                Engraving Text Overlay
+                NOTE: These coordinates [0, 0.1, 0.5] are a starting point.
+                You may need to manually adjust x, y, z to align perfectly with the
+                plate surface of the '2kol1.glb' model.
+            */}
+                    <group rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.1, 0.5]}>
+                        <Text
+                            position={[0, 0, 0]}
+                            fontSize={0.2}
+                            color="#781F19" // Deep Ruby for contrast/inlay look
+                            anchorX="center"
+                            anchorY="middle"
+                            characters="abcdefghijklmnopqrstuvwxyz0123456789!"
+                        >
+                            {text}
+                        </Text>
+                    </group>
                 </group>
-            </group>
+            </Center>
         </Float>
     );
 }
